@@ -39,9 +39,9 @@ Méthodes HTTP :
 - DELETE /users/123 → Supprimer un utilisateur
 
 Avantages :
-✅ Simple à comprendre et implémenter
-✅ Largement adopté et supporté
-✅ Mise en cache efficace
+- ✅ Simple à comprendre et implémenter
+- ✅ Largement adopté et supporté
+- ✅ Mise en cache efficace
 
 
 <h2> API GraphQL Query Language for API </h2>
@@ -61,10 +61,12 @@ Exemple de requête :
         }
     }
 }
+
+
 Avantages :
-✅ Évite le sur-fetching et sous-fetching
-✅ Une seule requête pour des données complexes
-✅ Auto-documentation via le schéma
+- ✅ Évite le sur-fetching et sous-fetching
+- ✅ Une seule requête pour des données complexes
+- ✅ Auto-documentation via le schéma
 
 
 <h2> REST vs GraphQL </h2>
@@ -86,5 +88,90 @@ Quand utiliser GraphQL :
 - Applications complexes avec besoins variés
 - Applications mobiles (économie de bande passante)
 - Équipe expérimentée
+</details>
+
+<details>
+<summary><h1> CSRF Cross-Site Request Forgery </h1></summary>
+<h2> Qu'est-ce que CSRF ?</h2>
+
+Cross-Site Request Forgery est une vulnérabilité qui force un utilisateur authentifié à exécuter des actions non désirées sur une application web.
+
+<h2> Principe fondamental </h2>
+Utilisateur connecté + Requête forgée = Action malveillante
+
+Exemple : 
+- Comme un escroc utilisant votre signature pour des virements, CSRF utilise votre session web pour agir à votre insu.
+
+<h2> Mécanisme d'une attaque CSRF </h2>
+
+![alt text](<Capture d’écran 2025-10-26 à 19.27.20.png>)
+
+<h2> Conditions pour une attaque réussie </h2>
+
+![alt text](<Capture d’écran 2025-10-26 à 19.28.13.png>)
+
+Pourquoi ça fonctionne ? Les navigateurs incluent automatiquement les cookies dans toutes les requêtes vers un domaine !
+
+<h2>Vecteurs d'attaque CSRF </h2>
+
+- Emails piégés
+Objet : "🏍️ Votre moto a gagné !"
+De : concours@moto-magazine.com
+
+Cliquez ici pour réclamer vos 500€ d'équipements !
+
+- Réseaux sociaux 
+Liens partagés avec descriptions attrayantes
+
+- Attaques AJAX modernes
+// Requête JavaScript malveillante
+fetch('https://app.com/api/users/123', {
+  method: 'DELETE',
+  credentials: 'include' // Cookies inclus !
+});
+
+- Images malveillantes
+<!-- Image invisible qui exécute l'action -->
+<img src="https://app.com/delete-account?confirm=yes" 
+     style="width:1px;height:1px;">
+
+- Techniques psychologiques
+• Urgence : "Offre limitée 5 min !"
+• Récompense : Gros gains promis
+• Autorité : Faux logos officiels
+• Simplicité : "Un simple clic"
+
+<h2> Comment Symfony nous protège </h2>
+
+![alt text](<Capture d’écran 2025-10-26 à 19.34.00.png>)
+
+- Configuration
+# config/packages/framework.yaml
+framework:
+    csrf_protection:
+        enabled: true
+        check_header: true
+
+- Template Twig
+{{ form_start(form) }}
+    {{ form_widget(form.name) }}
+    {{ form_widget(form.email) }}
+    
+    {# Token CSRF automatique ! #}
+    
+    <button type="submit">Enregistrer</button>
+{{ form_end(form) }}
+
+- HTML généré
+<form method="POST">
+    <input type="text" name="user[name]">
+    <input type="email" name="user[email]">
+    
+    <!-- ✅ Token CSRF automatique -->
+    <input type="hidden" name="_csrf_token" 
+           value="Vx8rQ2mL9kPnF7sA3hN6bE1tY4uI0wR5">
+    
+    <button type="submit">Enregistrer</button>
+</form>
 
 </details>

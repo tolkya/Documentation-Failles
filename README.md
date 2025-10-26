@@ -471,3 +471,117 @@ Le MVC n'est PAS compliqué ! C'est juste une façon logique d'organiser son cod
 1. `Model` = La cuisine (prépare les données)
 2. `View` = La salle de restaurant (présente au client)  
 3. `Controller` = Le serveur (fait le lien entre les deux)
+</details>
+
+
+<details>
+<summary><h1> ORM Object-Relational Mapping </h1></summary>
+<h2> C’est quoi ORM ? </h2>
+ORM (Object-Relational Mapping) désigne une technique de programmation informatique qui crée un pont entre les bases de données relationnelles et le paradigme de la programmation orientée objet. L’ORM permet aux développeurs d’interagir avec une base de données à l’aide d’objets, sans avoir à écrire directement des instructions SQL ou à gérer les échanges de données de manière manuelle.
+
+<h2> Exemples d’ORM célèbres </h2>
+
+- Hibernate : un outil ORM très utilisé dans l’écosystème Java.
+- Entity Framework : le framework ORM de Microsoft pour .NET.
+- Django ORM : intégré dans le framework web Django pour Python.
+- ActiveRecord : utilisé en Ruby, notamment avec le framework Rails.
+- Sequelize : une solution ORM populaire pour Node.js.
+
+<h2> Définition détaillée </h2>
+
+Dans le développement d’applications, l’accès et la gestion des données jouent un rôle central. Les bases de données traditionnelles fonctionnent avec des tables et des relations, tandis que les langages de programmation modernes utilisent des objets pour modéliser des entités et des comportements. L’ORM offre une couche d’abstraction qui permet de manipuler ces objets et de les persister en base de données comme s’ils étaient des enregistrements de tables.
+
+Grâce à l’ORM, les développeurs n’ont pas besoin de se focaliser sur la complexité des commandes SQL. Ils peuvent rester dans le contexte de leur langage de programmation habituel, en s’appuyant sur des classes et des instances d’objets pour représenter et manipuler leurs données. Un des principaux avantages de cette méthode est qu’elle réduit les erreurs potentielles dans le code SQL, et accélère le développement en permettant la réutilisation du code orienté objet.
+
+<h2> Symfony --> Doctrine </h2>
+
+<h3> Avantage :</h3>
+
+- parler a doctrine dans le langage de doctrine qui se débrouillera pour aller chercher cela dans la base peu importe la configuration de la base de données..
+- Il n’y a plus de risque d’injection SQL.
+- Si la requête n’a pas possible d’être faite par L’ORM alors il est possible de faire la requête manuellement mais attention risque.
+- Rapide, Sécurité, +++.
+
+<h3>Dans un projet Symfony :</h3>
+
+- Une Entity au sens des ORM c’est la représentation sous forme d’objet d’une ligne d’une table. DONC entity = objet. Qui dis objet dis CLASSE.
+- Repository, c’est ce que contient les méthodes pour instancier un objet de la table. 
+
+<h3>Pour créer une entity </h3>
+
+```bash
+sf make:entity
+```
+Définissez un objet de la table.
+<h3> MIGRATIONS </h3>
+
+Une fois que les entity, repository et autre sont créée
+```bash
+sf make:migration
+```
+
+Création d’un fichier de migration qui sera horodaté.
+Ce fichier de migration, quand vous allez lancer la commande migration Symfony, va parcourir toutes les entités et les propriétés et il va tout faire. Donc, on va obtenir un fichier.
+Ensuite, il faudra faire
+```bash
+sf doctrine:migrations:migrate
+```
+</details>
+
+
+<details>
+<summary><h1> XSS Cross‑Site Scripting  </h1></summary>
+<h2> Qu’est-ce qu’une faille XSS ? </h2>
+
+Les XSS font partie de la catégorie des vulnérabilités par injection de code au même titre que les injections SQL. Cependant pour découvrir et exploiter une faille XSS, il s’agit pour un attaquant d’injecter du code malveillant via les paramètres d’entrée côté client.
+
+<h2> Impact potentiel </h2>
+
+- Vol de cookie / token d'authentification (si non HttpOnly ou via JS).
+- Usurpation d'identité, actions au nom de l'utilisateur.
+- Attaques de phishing, propagation de malware, compromission de comptes.
+
+<h2> Vocabulaire essentiel </h2>
+
+- Payload : le code malveillant injecté 
+- Exemple : 
+
+```bash
+<script>alert(1)</script>
+```
+
+- Escaping (échappement) : transformer des caractères spéciaux pour qu'ils s'affichent ( < → &lt; ), pas d’exécution.
+- Sanitization : nettoyage/filtrage du HTML autorisé, enlever balises/attributs dangereux (ex : HTML Purifier).
+- CSP : Content Security Policy — règle côté navigateur limitant d'où les scripts peuvent être chargés.
+- HttpOnly cookie : cookie non accessible en JavaScript (réduit le vol via XSS).
+
+<h2> I. Attaque XSS reflétée </h2>
+
+![alt text](Attaque-XSS-reflétée-1024x535.png)
+
+<h2> II. Attaque XSS stockée </h2>
+
+![alt text](XSS-stockee-1024x535.jpg)
+
+<h2> Framework (symphony) vs XSS  </h2>
+
+- Ils fournissent souvent : auto‑escaping dans les moteurs de templates
+- {{ post.content }} est échappé automatiquement par Twig 
+- const postData = JSON.parse('{{ post|json_encode|e("js") }}’);
+json_encode produit une chaîne JSON sûre
+|e('js') évite que des séquences brisées écrasent le script.
+- Exemple :
+```bash
+Bundle :
+     nelmio/security-bundle
+
+$safeContents = $htmlSanitizer->sanitize($unsafeContents);
+```
+
+<h2> Protections essentielles  </h2>
+
+1) Échapper la sortie selon le contexte (htmlspecialchars, attribute, JS, URL).
+2) Utiliser le moteur de template (Twig) : auto-escape par défaut — éviter |raw.
+3) Ne jamais insérer HTML utilisateur sans sanitizer (ex :  HTMLPurifier($config);).
+4) Mettre en place CSP (report-only puis enforcement).
+5) Cookies HttpOnly, Secure, SameSite.

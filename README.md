@@ -358,3 +358,116 @@ Symfony, framework PHP robuste, intègre de nombreuses fonctionnalités de sécu
 - Configurer un firewall approprié
 </details>
 
+<details>
+<summary><h1> MVC Model-View-Controller </h1></summary>
+<h2> Qu'est-ce que le MVC ?</h2>
+
+Le MVC (Model-View-Controller) est un pattern architectural 'DESIGN PATTERN' qui sépare une application en 3 parties distinctes :
+
+```
+┌──────────────┐
+│    MODEL     │  ← Données + Logique métier
+└──────────────┘
+       ↕
+┌──────────────┐
+│  CONTROLLER  │  ← Chef d'orchestre
+└──────────────┘
+       ↕
+┌──────────────┐
+│     VIEW     │  ← Interface utilisateur
+└──────────────┘
+```
+
+<h2> MODEL (Modèle) </h2>
+<h3>Rôle : Gère les données et la logique métier</h3>
+
+- Accès à la base de données
+- Validation des données
+- Règles métier
+- Ne connaît RIEN de l'interface utilisateur
+
+<h2> VIEW (Vue) </h2>
+<h3>Rôle : Affichage et interface utilisateur</h3>
+
+- Pages HTML
+- Templates
+- Formulaires
+- Ne fait QUE afficher
+- Ne contient AUCUNE logique métier
+
+<h2> CONTROLLER (Contrôleur) </h2>
+<h3>Rôle : Chef d'orchestre entre Model et View</h3>
+
+- Reçoit les requêtes utilisateur
+- Appelle le Model pour récupérer/modifier les données
+- Choisit la View à afficher
+- Passe les données à la View
+
+<h2> FLUX D'EXÉCUTION </h2>
+
+```
+1. Utilisateur clique sur "Voir les motos"
+         ↓
+2. CONTROLLER reçoit la demande
+         ↓
+3. CONTROLLER demande les données au MODEL
+         ↓
+4. MODEL récupère les données de la BDD
+         ↓
+5. CONTROLLER passe les données à la VIEW
+         ↓
+6. VIEW affiche la page à l'utilisateur
+```
+
+<h2> AVANTAGES DU MVC </h2>
+
+<h3>✅ SÉPARATION DES RESPONSABILITÉS</h3>
+
+- Un développeur front : travaille sur les Views
+- Un développeur back : travaille sur les Models
+- Un chef de projet :  définit les Controllers
+
+<h3>✅ MAINTENANCE FACILE</h3>
+
+- Changer l'interface ? → Modifier seulement les Views
+- Changer de base de données ? → Modifier seulement les Models
+- Ajouter une fonctionnalité ? → Ajouter un Controller
+
+<h3>✅ RÉUTILISABILITÉ</h3>
+
+- Un Model peut être utilisé par plusieurs Controllers
+- Une View peut afficher différents types de données
+
+<h3>✅ TESTABILITÉ</h3>
+
+- Tester la logique métier indépendamment de l'interface
+- Tester l'interface indépendamment des données
+
+<h2> ❌ CE QU'IL NE FAUT PAS FAIRE : </h2>
+
+- Mettre du SQL dans une View
+- Mettre du HTML dans un Model
+- Faire des échos/prints dans un Controller
+- Mélanger la logique métier avec l'affichage
+
+<h2> ✅ CE QU'IL FAUT FAIRE : </h2>
+
+- `Model` : Seulement les données et la logique métier
+- `View` : Seulement l'affichage
+- `Controller` : Seulement la coordination entre les deux
+
+<h2> FRAMEWORKS QUI UTILISENT MVC </h2>
+
+- `PHP` : Laravel, Symfony, CodeIgniter
+- `JavaScript` : Angular, Vue.js
+- `Python` : Django, Flask
+- `Java` : Spring MVC
+- `C#` : ASP.NET MVC
+
+<h2> CONCLUSION </h2>
+
+Le MVC n'est PAS compliqué ! C'est juste une façon logique d'organiser son code :
+
+1. `Model` = La cuisine (prépare les données)
+2. `View` = La salle de restaurant (présente au client)  
+3. `Controller` = Le serveur (fait le lien entre les deux)

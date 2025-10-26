@@ -104,36 +104,46 @@ Exemple :
 
 <h2> Mécanisme d'une attaque CSRF </h2>
 
-![alt text](<Capture d’écran 2025-10-26 à 19.27.20.png>)
+![alt text](A.png)
 
 <h2> Conditions pour une attaque réussie </h2>
 
-![alt text](<Capture d’écran 2025-10-26 à 19.28.13.png>)
+![alt text](B.png)
 
 Pourquoi ça fonctionne ? Les navigateurs incluent automatiquement les cookies dans toutes les requêtes vers un domaine !
 
 <h2>Vecteurs d'attaque CSRF </h2>
 
 - Emails piégés
+
 Objet : "🏍️ Votre moto a gagné !"
 De : concours@moto-magazine.com
 
 Cliquez ici pour réclamer vos 500€ d'équipements !
 
 - Réseaux sociaux 
+
 Liens partagés avec descriptions attrayantes
 
 - Attaques AJAX modernes
+
 // Requête JavaScript malveillante
+
 fetch('https://app.com/api/users/123', {
+
   method: 'DELETE',
+
   credentials: 'include' // Cookies inclus !
+
 });
 
 - Images malveillantes
+
+```bash
 <!-- Image invisible qui exécute l'action -->
 <img src="https://app.com/delete-account?confirm=yes" 
      style="width:1px;height:1px;">
+```
 
 - Techniques psychologiques
 • Urgence : "Offre limitée 5 min !"
@@ -143,16 +153,19 @@ fetch('https://app.com/api/users/123', {
 
 <h2> Comment Symfony nous protège </h2>
 
-![alt text](<Capture d’écran 2025-10-26 à 19.34.00.png>)
+![alt text](C.png)
 
 - Configuration
+```bash
 # config/packages/framework.yaml
 framework:
     csrf_protection:
         enabled: true
         check_header: true
+```
 
 - Template Twig
+```bash
 {{ form_start(form) }}
     {{ form_widget(form.name) }}
     {{ form_widget(form.email) }}
@@ -161,8 +174,10 @@ framework:
     
     <button type="submit">Enregistrer</button>
 {{ form_end(form) }}
+```
 
 - HTML généré
+```bash
 <form method="POST">
     <input type="text" name="user[name]">
     <input type="email" name="user[email]">
@@ -173,5 +188,6 @@ framework:
     
     <button type="submit">Enregistrer</button>
 </form>
+```
 
 </details>

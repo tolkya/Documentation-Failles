@@ -117,7 +117,9 @@ Pourquoi ça fonctionne ? Les navigateurs incluent automatiquement les cookies d
 - Emails piégés
 
 Objet : "🏍️ Votre moto a gagné !"
+
 De : concours@moto-magazine.com
+
 
 Cliquez ici pour réclamer vos 500€ d'équipements !
 
@@ -126,16 +128,13 @@ Cliquez ici pour réclamer vos 500€ d'équipements !
 Liens partagés avec descriptions attrayantes
 
 - Attaques AJAX modernes
-
+```bash
 // Requête JavaScript malveillante
-
 fetch('https://app.com/api/users/123', {
-
   method: 'DELETE',
-
   credentials: 'include' // Cookies inclus !
-
 });
+```
 
 - Images malveillantes
 
@@ -189,5 +188,49 @@ framework:
     <button type="submit">Enregistrer</button>
 </form>
 ```
+</details>
 
+<details>
+<summary><h1> IDOR Insecure Direct Object Reference </h1></summary>
+<h2> Qu'est-ce qu'une faille IDOR ?</h2>
+
+Une faille IDOR permet d’accéder à une ressource via un identifiant sans contrôle d’accès.
+
+Exemple :
+
+https://site.com/profil?id=123
+
+➡ Si je remplace 123 par 124 et que j’accède au profil de quelqu’un d’autre → faille IDOR.
+
+<h2> Comment ça marche ? </h2>
+
+- Les objets (comptes, fichiers, commandes) ont un identifiant unique.
+- L’application ne vérifie pas si l’utilisateur a le droit d’y accéder.
+
+Exemple :
+
+https://banque.com/compte?id=4501
+
+➡ Si un client change 4501 en 4502 et accède au compte d’un autre → faille.
+
+<h2> Conséquences </h2>
+
+- Accès à des données personnelles (risque RGPD).
+- Modification ou suppression de données sensibles.
+- Escalade de privilèges (ex. un simple utilisateur accède à des fonctions admin).
+
+<h2> Prévention </h2>
+
+- Ne jamais faire confiance aux paramètres côté client (URL, cookies, formulaires).
+- Vérifier systématiquement les droits d’accès.
+- Utiliser des identifiants non prévisibles (UUID, tokens).
+- Faire des tests de sécurité (pentests, bug bounty).
+
+
+<h2> Conclusion & OWASP </h2>
+
+- Les IDOR sont simples à exploiter mais aux conséquences graves.
+- Elles font partie du Top 10 OWASP 2021 : catégorie #1 – Broken Access Control.
+
+<h2> Message clé : Toujours vérifier qui demande, et à quoi il a droit. </h2>
 </details>

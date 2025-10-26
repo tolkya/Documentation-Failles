@@ -244,7 +244,7 @@ s'interpose secrètement entre deux parties qui communiquent, interceptant
 et potentiellement modifiant leurs échanges sans que les victimes s'en
 aperçoivent.
 
-![alt text](../../SIO2/Programmation/MITM/how-man-in-middle-works-min.png)
+![alt text](MITM.png)
 
 <h2> Comment fonctionne une attaque MITM ? </h2>
 

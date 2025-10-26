@@ -557,7 +557,7 @@ Les XSS font partie de la catégorie des vulnérabilités par injection de code 
 
 <h2> I. Attaque XSS reflétée </h2>
 
-![alt text](Attaque-XSS-reflétée-1024x535.png)
+![alt text](Attaque-XSS-reflétée-1024x535-1.png)
 
 <h2> II. Attaque XSS stockée </h2>
 

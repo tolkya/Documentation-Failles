@@ -234,3 +234,127 @@ https://banque.com/compte?id=4501
 
 <h2> Message clé : Toujours vérifier qui demande, et à quoi il a droit. </h2>
 </details>
+
+<details>
+<summary><h1> MITM Man-in-the-Middle </h1></summary>
+<h2> Qu'est-ce qu'une attaque MITM ?</h2>
+
+Une attaque Man-in-the-Middle est une cyberattaque où un attaquant
+s'interpose secrètement entre deux parties qui communiquent, interceptant
+et potentiellement modifiant leurs échanges sans que les victimes s'en
+aperçoivent.
+
+![alt text](../../SIO2/Programmation/MITM/how-man-in-middle-works-min.png)
+
+<h2> Comment fonctionne une attaque MITM ? </h2>
+
+1. Positionnement
+- Wi-Fi public non sécurisé
+- ARP Spoofing
+- DNS Spoofing
+- Compromission de routeur
+
+2. Interception
+- Capture de paquets réseau
+- Décryptage des communications
+- Analyse des métadonnées
+- Enregistrement des sessions
+
+3. Manipulation
+- Modification des données
+- Injection de code malveillant
+- Redirection frauduleuse
+- Usurpation d'identité
+
+<h2> Types d'attaques MITM </h2>
+
+- Evil Twin
+Création d'un faux point d'accès Wi-Fi avec un nom identique à un réseau
+légitime pour tromper les utilisateurs.
+
+- ARP Spoofing
+Falsification des adresses MAC dans les tables ARP pour rediriger le trafic
+vers la machine de l'attaquant.
+
+- SSL Stripping
+Rétrogradation des connexions HTTPS vers HTTP pour intercepter les
+données en clair.
+
+- DNS Spoofing
+Falsification des réponses DNS pour rediriger vers des serveurs malveillants
+contrôlés par l'attaquant.
+
+<h2> Risques et conséquences </h2>
+
+<h3>Pour les particuliers</h3>
+
+- Vol d'identifiants : mots de passe, comptes bancaires
+- Usurpation d'identité : accès aux réseaux sociaux, emails
+- Espionnage : lecture des messages privés, historique
+- Fraude financière : transactions détournées
+
+<h3>Pour les entreprises</h3>
+
+- Espionnage industriel : vol de secrets commerciaux
+- Compromission des systèmes : accès aux serveurs internes
+- Violation de données : exposition d'informations clients
+- Perte de réputation : impact sur la confiance
+
+<h2> Risques et conséquences </h2>
+
+- Chiffrement
+  - HTTPS obligatoire
+  - VPN pour tout le trafic
+  - Messagerie chiffrée
+  - Protocoles sécurisés
+
+- Vigilance réseau
+  - Éviter les Wi-Fi publics
+  - Vérifier les certificats SSL
+  - Utiliser des réseaux de confiance
+  - Surveiller les connexions
+
+- Bonnes pratiques
+  - Authentification 2FA
+  - Mises à jour régulières
+  - DNS sécurisés
+  - Formation utilisateurs
+
+- Outils de protection
+  - Antivirus avec protection réseau
+  - Pare-feu personnels
+  - extensions HTTPS
+  - Détection ARP Spoofing
+
+<h2> Symfony : Protection côté développement </h2>
+<h3>Pourquoi Symfony contre les attaques MITM ?</h3>
+
+Symfony, framework PHP robuste, intègre de nombreuses fonctionnalités de sécurité natives qui aident à protéger les applications web contre les attaques Man-in-the-Middle.
+
+- HTTPS forcé
+-  Protection CSRF
+- Gestion des sessions
+- Headers de sécurité
+
+<h3>Fonctionnalités avancées</h3>
+
+- Validation des données
+  - Validation côté serveur obligatoire
+  - Sanitisation automatique des inputs
+  - Protection contre l'injection SQL
+
+- Authentification robuste
+  - Système d'authentification intégré
+  - Hashage sécurisé des mots de passe
+  - Support OAuth2/JWT
+
+<h3>Bonnes pratiques Symfony contre MITM</h3>
+
+- Toujours utiliser HTTPS en production
+- Configurer les headers de sécurité appropriés
+- Valider toutes les entrées utilisateur
+- Utiliser les bundles de sécurité (SecurityBundle)
+- Maintenir Symfony à jour pour les correctifs de sécurité
+- Configurer un firewall approprié
+</details>
+

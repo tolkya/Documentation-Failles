@@ -550,7 +550,11 @@ Les XSS font partie de la catégorie des vulnérabilités par injection de code 
 <script>alert(1)</script>
 ```
 
-- Escaping (échappement) : transformer des caractères spéciaux pour qu'ils s'affichent ( < → &lt; ), pas d’exécution.
+- Escaping (échappement) : transformer des caractères spéciaux pour qu'ils s'affichent 
+```bash
+ < → &lt; 
+ ```
+ , pas d’exécution.
 - Sanitization : nettoyage/filtrage du HTML autorisé, enlever balises/attributs dangereux (ex : HTML Purifier).
 - CSP : Content Security Policy — règle côté navigateur limitant d'où les scripts peuvent être chargés.
 - HttpOnly cookie : cookie non accessible en JavaScript (réduit le vol via XSS).
